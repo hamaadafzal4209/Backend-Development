@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      src="https://kit.fontawesome.com/f8e1a90484.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="main min-h-screen w-full bg-zinc-900 text-white p-10">
+      <a
+        href="/"
+        class="text-white mb-6 inline-block bg-zinc-700 px-3 py-1 rounded-md"
+        ><i class="fa-solid fa-arrow-left"></i> Go back to home</a
+      >
+      <h1 class="text-2xl"><%= filename %></h1>
+      <p class="text-lg pt-2 font-light"><%= fileData %></p>
+    </div>
+  </body>
+</html>

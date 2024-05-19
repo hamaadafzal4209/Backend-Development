@@ -1,13 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/style.css" />
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body>
-    <h1>Hello</h1>
-</body>
+    <script>
+      function deleteFile(filename) {
+        fetch(`/delete/${filename}`, {
+          method: "DELETE",
+        })
+          .then((response) => {
+            if (response.ok) {
+              location.reload();
+            } else {
+              alert("Error deleting file");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert("Error deleting file");
+          });
+      }
+    </script>
+  </head>
+
+  <body>
+    <div class="main min-h-screen w-full bg-zinc-900 text-white">
+      <div class="form p-10">
+        <form action="/create" method="post">
+          <input
+            name="title"
+            type="text"
+            class="w-full bg-zinc-800 text-white px-2 py-3 rounded-md outline-none"
+            placeholder="Title goes here..."
+          />
+          <textarea
+            name="details"
+            class="w-full my-2 bg-zinc-800 text-white px-2 py-3 rounded-md outline-none resize-none"
+            placeholder="Write your task details here..."
+            id=""
+          ></textarea>
+          <input
+            type="submit"
+            value="Create Task"
+            class="bg-blue-600 px-3 py-2 rounded-md"
+          />
+        </form>
+      </div>
+      <div class="tasks px-10 py-5 flex flex-wrap gap-3">
+        <% if (files.length > 0) { %> <% files.forEach((file) => { %>
+        <div class="task bg-zinc-800 min-w-64 p-4 rounded-md">
+          <h3 class="text-2xl"><%= file %></h3>
+          <div class="flex items-center justify-between mt-3">
+            <a href="/file/<%= file %>" class="text-blue-500 inline-block"
+              >Read More</a
+            >
+            <div>
+              <a href="/edit/<%= file %>" class="text-blue-500 inline-block"
+                >Edit</a
+              >
+              <button
+                class="text-red-700 pl-2"
+                onclick="deleteFile('<%= file %>')"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+        <% }) %> <% } else { %>
+        <h3 class="text-white text-2xl">No tasks yet.</h3>
+        <% } %>
+      </div>
+    </div>
+  </body>
 </html>
