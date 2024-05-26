@@ -34,7 +34,7 @@ const TodoList = () => {
         {todos.map(todo => (
           <li key={todo._id}>
             <span
-              style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}
+              className={todo.completed ? 'completed' : ''}
               onClick={() => toggleComplete(todo._id, todo.completed)}
             >
               {todo.text}
