@@ -120,6 +120,36 @@ app.get("/exists", async (req, res, next) => {
   }
 });
 
+// $and operator
+app.get("/and", async (req, res, next) => {
+  try {
+    const users = await userModel.find({$and : [{isMarried: false}, {age : {$gte: 30}}]});
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// $or operator
+app.get("/or", async (req, res, next) => {
+  try {
+    const users = await userModel.find({$or : [{isMarried: false}, {age : {$gte: 30}}]});
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// $regex operator
+app.get("/regex", async (req, res, next) => {
+    try {
+      const users = await userModel.find({ name: { $regex: /^j.*t$/i } });
+      res.json(users);
+    } catch (error) {
+      next(error);
+    }
+  });
+  
 app.listen(3000, () => {
   console.log("Connected to server");
 });
