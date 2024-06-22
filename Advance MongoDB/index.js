@@ -70,6 +70,13 @@ app.get("/greaterthenorequal", async (req, res) => {
     res.json(users)
 })
 
+// in operator
+
+app.get("/in", async (req, res) => {
+    const users = await userModel.find({age : {$in: [25,27,30,35]}})
+    res.json(users)
+})
+
 
 app.listen(3000, () => {
     console.log('Connected to server');
