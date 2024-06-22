@@ -34,10 +34,25 @@ app.get("/equal", async (req, res) => {
     const users = await userModel.find({age : {$eq: 30}})
     res.json(users)
 })
+
 // ne operator
 
 app.get("/notequal", async (req, res) => {
     const users = await userModel.find({age : {$ne: 30}})
+    res.json(users)
+})
+
+// lt operator
+
+app.get("/lessthen", async (req, res) => {
+    const users = await userModel.find({age : {$lt: 29}})
+    res.json(users)
+})
+
+// lte operator
+
+app.get("/lessthenorequal", async (req, res) => {
+    const users = await userModel.find({age : {$lte: 28}})
     res.json(users)
 })
 
