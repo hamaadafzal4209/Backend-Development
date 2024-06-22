@@ -5,7 +5,6 @@ const userModel = require("./model/user.js");
 const cookieParser = require("cookie-parser");
 const path = require("path");
 const bcrypt = require("bcrypt");
-const { log } = require("console");
 const jwt = require("jsonwebtoken");
 
 app.set("view engine", "ejs");
