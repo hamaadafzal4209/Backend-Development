@@ -17,14 +17,24 @@ app.get("/", (req, res, next) => {
     res.send("Working");
 });
 
-app.get("/createMany", async (req, res, next) => {
-    try {
-        const allUsers = await userModel.insertMany(dummyUsers);
-        res.send(allUsers);
-    } catch (error) {
-        next(error);
-    }
-});
+// insert many function
+
+// app.get("/createMany", async (req, res, next) => {
+//     try {
+//         const allUsers = await userModel.insertMany(dummyUsers);
+//         res.send(allUsers);
+//     } catch (error) {
+//         next(error);
+//     }
+// });
+
+// er operator
+
+app.get("/users", async (req, res) => {
+    const users = await userModel.find({age : {$eq: 30}})
+    res.json(users)
+})
+
 
 app.listen(3000, () => {
     console.log('Connected to server');
