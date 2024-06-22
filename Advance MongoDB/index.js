@@ -1,90 +1,125 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const dummyUsers = require('./utils/data.js');
-const userModel = require('./models/user.js');
-const mongoose = require('mongoose');
+const dummyUsers = require("./utils/data.js");
+const userModel = require("./models/user.js");
+const mongoose = require("mongoose");
 
-mongoose.connect('mongodb://localhost:27017/operation', {
+mongoose
+  .connect("mongodb://localhost:27017/operation", {
     useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
-    console.log('Connected to MongoDB');
-}).catch((err) => {
-    console.error('Error connecting to MongoDB', err);
-});
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((err) => {
+    console.error("Error connecting to MongoDB", err);
+  });
 
 app.get("/", (req, res, next) => {
-    res.send("Working");
+  res.send("Working");
 });
 
-// insert many function
-
+// Insert many users
 app.get("/createMany", async (req, res, next) => {
-    try {
-        const allUsers = await userModel.insertMany(dummyUsers);
-        res.send(allUsers);
-    } catch (error) {
-        next(error);
-    }
+  try {
+    const allUsers = await userModel.insertMany(dummyUsers);
+    res.json(allUsers);
+  } catch (error) {
+    next(error);
+  }
 });
 
-// eq operator
+// $eq operator
+app.get("/equal", async (req, res, next) => {
+  try {
+    const users = await userModel.find({ age: { $eq: 30 } });
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+});
 
-app.get("/equal", async (req, res) => {
-    const users = await userModel.find({age : {$eq: 30}})
-    res.json(users)
-})
+// $ne operator
+app.get("/notequal", async (req, res, next) => {
+  try {
+    const users = await userModel.find({ age: { $ne: 30 } });
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+});
 
-// ne operator
+// $lt operator
+app.get("/lessthan", async (req, res, next) => {
+  try {
+    const users = await userModel.find({ age: { $lt: 29 } });
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+});
 
-app.get("/notequal", async (req, res) => {
-    const users = await userModel.find({age : {$ne: 30}})
-    res.json(users)
-})
+// $lte operator
+app.get("/lessthanorequal", async (req, res, next) => {
+  try {
+    const users = await userModel.find({ age: { $lte: 28 } });
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+});
 
-// lt operator
+// $gt operator
+app.get("/greaterthan", async (req, res, next) => {
+  try {
+    const users = await userModel.find({ age: { $gt: 28 } });
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+});
 
-app.get("/lessthen", async (req, res) => {
-    const users = await userModel.find({age : {$lt: 29}})
-    res.json(users)
-})
+// $gte operator
+app.get("/greaterthanorequal", async (req, res, next) => {
+  try {
+    const users = await userModel.find({ age: { $gte: 28 } });
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+});
 
-// lte operator
+// $in operator
+app.get("/in", async (req, res, next) => {
+  try {
+    const users = await userModel.find({ age: { $in: [25, 27, 30, 35] } });
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+});
 
-app.get("/lessthenorequal", async (req, res) => {
-    const users = await userModel.find({age : {$lte: 28}})
-    res.json(users)
-})
+// $nin operator
+app.get("/nin", async (req, res, next) => {
+  try {
+    const users = await userModel.find({ age: { $nin: [25, 27, 30, 35] } });
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+});
 
-// gt operator
-
-app.get("/greaterthen", async (req, res) => {
-    const users = await userModel.find({age : {$gt: 28}})
-    res.json(users)
-})
-
-// gte operator
-
-app.get("/greaterthenorequal", async (req, res) => {
-    const users = await userModel.find({age : {$gte: 28}})
-    res.json(users)
-})
-
-// in operator
-
-app.get("/in", async (req, res) => {
-    const users = await userModel.find({age : {$in: [25,27,30,35]}})
-    res.json(users)
-})
-
-// nin operator
-
-app.get("/nin", async (req, res) => {
-    const users = await userModel.find({age : {$nin: [25,27,30,35]}})
-    res.json(users)
-})
-
+// $exists operator
+app.get("/exists", async (req, res, next) => {
+  try {
+    const users = await userModel.find({ isAdmin: { $exists: true } });
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.listen(3000, () => {
-    console.log('Connected to server');
+  console.log("Connected to server");
 });
