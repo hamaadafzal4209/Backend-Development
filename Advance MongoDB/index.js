@@ -19,19 +19,25 @@ app.get("/", (req, res, next) => {
 
 // insert many function
 
-// app.get("/createMany", async (req, res, next) => {
-//     try {
-//         const allUsers = await userModel.insertMany(dummyUsers);
-//         res.send(allUsers);
-//     } catch (error) {
-//         next(error);
-//     }
-// });
+app.get("/createMany", async (req, res, next) => {
+    try {
+        const allUsers = await userModel.insertMany(dummyUsers);
+        res.send(allUsers);
+    } catch (error) {
+        next(error);
+    }
+});
 
-// er operator
+// eq operator
 
-app.get("/users", async (req, res) => {
+app.get("/equal", async (req, res) => {
     const users = await userModel.find({age : {$eq: 30}})
+    res.json(users)
+})
+// ne operator
+
+app.get("/notequal", async (req, res) => {
+    const users = await userModel.find({age : {$ne: 30}})
     res.json(users)
 })
 
