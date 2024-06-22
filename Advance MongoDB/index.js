@@ -56,6 +56,20 @@ app.get("/lessthenorequal", async (req, res) => {
     res.json(users)
 })
 
+// gt operator
+
+app.get("/greaterthen", async (req, res) => {
+    const users = await userModel.find({age : {$gt: 28}})
+    res.json(users)
+})
+
+// gte operator
+
+app.get("/greaterthenorequal", async (req, res) => {
+    const users = await userModel.find({age : {$gte: 28}})
+    res.json(users)
+})
+
 
 app.listen(3000, () => {
     console.log('Connected to server');
