@@ -36,6 +36,16 @@ app.post("/:username/create/post", async (req, res) => {
     res.send({user, createdPost});
 });
 
+app.get("/posts" , async (req,res) => {
+    let posts = await postModel.find().populate("userId");
+    res.json(posts);
+})
+
+app.get("/users" , async (req,res) => {
+    let users = await userModel.find().populate("posts");
+    res.json(users);
+})
+
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });
